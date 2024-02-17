@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Leche</title>
+</head>
+<body>
+    <h1>Bienvenido al Control de Leche</h1>
+    <p {% if es_solicitud_post %} role="alert"{%endif%}> {{ proximo }} tiene que traer la leche</p>
+    <form method="post">
+        <button type="submit" name="action" value="marcar">Marcar como traída</button>
+        <button type="submit" name="action" value="saltar">saltar turno de {{ proximo }}</button>
+    </form>
+
+</body>
+</html>
