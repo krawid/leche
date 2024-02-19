@@ -12,5 +12,18 @@
         <button type="submit" name="action" value="saltar">saltar turno de {{ proximo }}</button>
     </form>
 
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Contribuciones</th>
+    </tr>
+    {% for usuario in datos["lista"] %}
+    <tr>
+        <td>{{ usuario["nombre"] }}</td>
+        <td>{{ usuario["contribuciones"] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
 </body>
 </html>

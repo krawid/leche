@@ -13,12 +13,14 @@ def cargar_datos(ruta_archivo):
     except (FileNotFoundError, json.JSONDecodeError):
         datos = {
             "lista": [
-                "Agus",
-                "Jose",
-                "Kari",
-                "María",
-                "Moi",
-                "Mónica"
+        datos = {
+            "lista": [
+                {"nombre": "Agus", "contribuciones": 0},
+                {"nombre": "Jose", "contribuciones": 0},
+                {"nombre": "Kari", "contribuciones": 0},
+                {"nombre": "María", "contribuciones": 0},
+                {"nombre": "Moi", "contribuciones": 0},
+                {"nombre": "Mónica", "contribuciones": 0}
             ],
             "indice_actual": 0
         }
@@ -31,6 +33,7 @@ def home():
     es_solicitud_post = False
     if request.method == "POST":
         if request.form["action"] == "marcar":
+            datos["lista"][datos["indice_actual"]]["contribuciones"] += 1
             datos["indice_actual"] = (datos["indice_actual"] + 1) % len(datos["lista"])
             print("índice incrementado")
         elif request.form["action"] == "saltar":
@@ -45,6 +48,6 @@ def home():
         session['es_solicitud_post'] = True
         return redirect(url_for("home"))
     es_solicitud_post = session.pop("es_solicitud_post", False)
-    return render_template("index.html", proximo = datos["lista"][datos["indice_actual"]], es_solicitud_post = es_solicitud_post)
+    return render_template("index.html", proximo=datos["lista"][datos["indice_actual"]]["nombre"], datos=datos, es_solicitud_post=es_solicitud_post)
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
