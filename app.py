@@ -13,8 +13,6 @@ def cargar_datos(ruta_archivo):
     except (FileNotFoundError, json.JSONDecodeError):
         datos = {
             "lista": [
-        datos = {
-            "lista": [
                 {"nombre": "Agus", "contribuciones": 0},
                 {"nombre": "Jose", "contribuciones": 0},
                 {"nombre": "Kari", "contribuciones": 0},
@@ -48,6 +46,9 @@ def home():
         session['es_solicitud_post'] = True
         return redirect(url_for("home"))
     es_solicitud_post = session.pop("es_solicitud_post", False)
+    print(datos["lista"])  # Debería mostrar una lista de diccionarios
+    print(datos["indice_actual"])  # Debería mostrar un entero
+
     return render_template("index.html", proximo=datos["lista"][datos["indice_actual"]]["nombre"], datos=datos, es_solicitud_post=es_solicitud_post)
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

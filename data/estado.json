@@ -1,1 +1,1 @@
-{"lista": ["María", "Jose", "Mónica", "Agus", "Kari", "Moi"], "indice_actual": 2}
+{"lista": [{"nombre": "Agus", "contribuciones": 2}, {"nombre": "Kari", "contribuciones": 1}, {"nombre": "María", "contribuciones": 1}, {"nombre": "Mónica", "contribuciones": 1}, {"nombre": "Jose", "contribuciones": 1}, {"nombre": "Moi", "contribuciones": 0}], "indice_actual": 1}
