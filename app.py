@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import json
 import os
 
@@ -31,9 +31,14 @@ def home():
     es_solicitud_post = False
     if request.method == "POST":
         if request.form["action"] == "marcar":
-            datos["lista"][datos["indice_actual"]]["contribuciones"] += 1
-            datos["indice_actual"] = (datos["indice_actual"] + 1) % len(datos["lista"])
-            print("índice incrementado")
+            cantidad_str = request.form.get("cantidad")
+            if cantidad_str.isdigit() and int(cantidad_str) > 0:
+                cantidad = int(cantidad_str)
+                datos["lista"][datos["indice_actual"]]["contribuciones"] += cantidad
+                datos["indice_actual"] = (datos["indice_actual"] + 1) % len(datos["lista"])
+            else:
+                flash("debes introducir al menos un cartón de leche", "error")
+                return redirect(url_for("home"))
         elif request.form["action"] == "saltar":
             if datos["indice_actual"] < len(datos["lista"]) - 1:
                 datos["lista"].append(datos["lista"].pop(datos["indice_actual"]))
