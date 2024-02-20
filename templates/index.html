@@ -17,8 +17,8 @@
     <p {% if es_solicitud_post %} role="alert"{%endif%}> {{ proximo }} tiene que traer la leche</p>
     <form method="post">
         <label for="cantidad">Introduce cuántos cartones de leche has traído</label>
-        <input type="text" name="cantidad" id="cantidad">
-        <button type="submit" name="action" value="marcar">Marcar como traída</button>
+        <input type="number" required min="1" name="cantidad" id="cantidad">
+        <button type="submit" name="action" value="marcar">Marcar como traída por {{proximo}}</button>
     </form>
     <form method="post">
         <button type="submit" name="action" value="saltar">saltar turno de {{ proximo }}</button>
