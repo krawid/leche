@@ -1,3 +1,4 @@
 *.json
 app_desktop.py
-__picache__/
+__pycache__/
+venv/
