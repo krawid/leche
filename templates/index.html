@@ -22,20 +22,28 @@
     </form>
     <form method="post">
         <button type="submit" name="action" value="saltar">saltar turno de {{ proximo }}</button>
+        <button type="submit" name="action" value="reiniciar" onclick="return confirmarReinicio()">Reiniciar datos</button>
     </form>
 
-<table>
-    <tr>
-        <th>Nombre</th>
-        <th>Contribuciones</th>
-    </tr>
-    {% for usuario in datos["lista"] %}
-    <tr>
-        <th>{{ usuario["nombre"] }}</th>
-        <td>{{ usuario["contribuciones"] }}</td>
-    </tr>
-    {% endfor %}
-</table>
+
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Contribuciones</th>
+        </tr>
+        {% for usuario in datos["lista"] %}
+        <tr>
+            <th>{{ usuario["nombre"] }}</th>
+            <td>{{ usuario["contribuciones"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+        function confirmarReinicio() {
+            return confirm("¿Estás seguro de que quieres reiniciar los datos?.");
+        }
+        </script>
+        
 
 </body>
 </html>

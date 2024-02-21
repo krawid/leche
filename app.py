@@ -6,24 +6,29 @@ app = Flask(__name__)
 app.secret_key = "clave_secreta"
 ruta_archivo = os.path.join("data", "estado.json")
 
+datos_iniciales = {
+    "lista": [
+        {"nombre": "Agus", "contribuciones": 0},
+        {"nombre": "Jose", "contribuciones": 0},
+        {"nombre": "Kari", "contribuciones": 0},
+        {"nombre": "María", "contribuciones": 0},
+        {"nombre": "Moi", "contribuciones": 0},
+        {"nombre": "Mónica", "contribuciones": 0}
+    ],
+    "indice_actual": 0
+}
+
 def cargar_datos(ruta_archivo):
     try:
         with open(ruta_archivo, "r", encoding="utf-8") as archivo:
             datos = json.load(archivo)
     except (FileNotFoundError, json.JSONDecodeError):
-        datos = {
-            "lista": [
-                {"nombre": "Agus", "contribuciones": 0},
-                {"nombre": "Jose", "contribuciones": 0},
-                {"nombre": "Kari", "contribuciones": 0},
-                {"nombre": "María", "contribuciones": 0},
-                {"nombre": "Moi", "contribuciones": 0},
-                {"nombre": "Mónica", "contribuciones": 0}
-            ],
-            "indice_actual": 0
-        }
+        datos = datos_iniciales
     return datos
 
+def reiniciar_datos():
+    with open(ruta_archivo, "w", encoding="utf-8") as archivo:
+        json.dump(datos_iniciales, archivo, ensure_ascii=False)
 
 @app.route('/', methods=["GET", "POST"])
 def home():
@@ -44,7 +49,10 @@ def home():
                 datos["lista"].append(datos["lista"].pop(datos["indice_actual"]))
             else:
                 datos["indice_actual"] = 0
-        print("antes de guardar los datos")
+        elif request.form["action"] == "reiniciar":
+            reiniciar_datos()
+            datos = cargar_datos(ruta_archivo)
+            flash("Datos reiniciados correctamente.", "info")
         with open(ruta_archivo, "w", encoding="utf-8") as archivo:
             json.dump(datos, archivo, ensure_ascii=False)
         print("después del guardado")
@@ -56,4 +64,4 @@ def home():
 
     return render_template("index.html", proximo=datos["lista"][datos["indice_actual"]]["nombre"], datos=datos, es_solicitud_post=es_solicitud_post)
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
